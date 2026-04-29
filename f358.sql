@@ -12445,7 +12445,7 @@ wwv_flow_api.create_page_item(
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4545594499134747466)
-,p_name=>'P18_AMOUNT'
+,p_name=>'P18_QUANTITY'
 ,p_source_data_type=>'NUMBER'
 ,p_is_required=>true
 ,p_item_sequence=>40
