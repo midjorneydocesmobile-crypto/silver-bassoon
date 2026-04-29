@@ -11619,8 +11619,19 @@ wwv_flow_api.create_page_plug(
 ,p_plug_template=>wwv_flow_api.id(4537318268741385488)
 ,p_plug_display_sequence=>20
 ,p_plug_display_point=>'BODY'
-,p_query_type=>'TABLE'
-,p_query_table=>'PAYMENTS'
+,p_query_type=>'SQL'
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT',
+'    cs.ID,',
+'    cs.ID_CONTRACT,',
+'    cs.ID_SERVICE,',
+'    cs.QUANTITY AS AMOUNT,',
+'    pr.PRICE AS CENA,',
+'    c.CONTRACT_NUMBER',
+'FROM CONTRACT_SERVICES cs',
+'LEFT JOIN PRICING pr ON pr.ID = cs.ID_PRICING',
+'LEFT JOIN CONTRACTS c ON c.ID = cs.ID_CONTRACT'
+))
 ,p_include_rowid_column=>false
 ,p_plug_source_type=>'NATIVE_IG'
 ,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
