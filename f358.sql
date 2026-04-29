@@ -23,11 +23,11 @@ wwv_flow_api.import_begin (
 end;
 /
  
-prompt APPLICATION 358 - 151КНЗ - Финансово счетоводно управление
+prompt APPLICATION 358 - 151КНЗ - Строительная экспертиза
 --
 -- Application Export:
 --   Application:     358
---   Name:            151КНЗ - Финансово счетоводно управление
+--   Name:            151КНЗ - Строительная экспертиза
 --   Date and Time:   13:29 Thursday April 3, 2025
 --   Exported By:     STUDENT_29_45
 --   Flashback:       0
@@ -10923,13 +10923,13 @@ wwv_flow_api.create_jet_chart_series(
 ,p_data_source_type=>'SQL'
 ,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'select',
-'    to_char(g.DATAFAKT, ''MM/YYYY'') as MESEC,',
-'    sum(r.WSICHKO) as OBSHTA_SUMMA',
-'from DOCUMENT_RE r',
-'join DOCUMENT_GL g on r.ID_M = g.ID_M',
-'where g.DATAFAKT is not null',
-'group by to_char(g.DATAFAKT, ''MM/YYYY'')',
-'order by to_char(g.DATAFAKT, ''MM/YYYY'')',
+'    to_char(g.PAYMENT_DATE, ''MM/YYYY'') as MESEC,',
+'    sum(r.AMOUNT) as OBSHTA_SUMMA',
+'from PAYMENTS r',
+'join CONTRACTS g on r.ID_CONTRACT = g.ID',
+'where g.PAYMENT_DATE is not null',
+'group by to_char(g.PAYMENT_DATE, ''MM/YYYY'')',
+'order by to_char(g.PAYMENT_DATE, ''MM/YYYY'')',
 ''))
 ,p_items_value_column_name=>'OBSHTA_SUMMA'
 ,p_group_short_desc_column_name=>'MESEC'
@@ -10993,7 +10993,7 @@ wwv_flow_api.create_page_plug(
 ,p_plug_display_sequence=>10
 ,p_plug_display_point=>'BODY'
 ,p_query_type=>'TABLE'
-,p_query_table=>'CLIENTS_CONS'
+,p_query_table=>'CLIENTS'
 ,p_include_rowid_column=>true
 ,p_plug_source_type=>'NATIVE_IR'
 ,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
@@ -11016,7 +11016,7 @@ wwv_flow_api.create_worksheet(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541347831563648801)
-,p_db_column_name=>'ID_CLIENT_CONS'
+,p_db_column_name=>'IDONS'
 ,p_display_order=>10
 ,p_column_identifier=>'B'
 ,p_column_label=>'Id Client Cons'
@@ -11034,7 +11034,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541348026339648803)
-,p_db_column_name=>'ID_CLIENT_C'
+,p_db_column_name=>'ID'
 ,p_display_order=>30
 ,p_column_identifier=>'D'
 ,p_column_label=>'Id Client C'
@@ -11066,7 +11066,7 @@ wwv_flow_api.create_worksheet_rpt(
 ,p_report_alias=>'45413468'
 ,p_status=>'PUBLIC'
 ,p_is_default=>'Y'
-,p_report_columns=>'ROWIDONS:ID_CLIENT_F:ID_CLIENT_C:ROWID'
+,p_report_columns=>'ROWIDONS:ID_CLIENT_F:ID:ROWID'
 );
 wwv_flow_api.create_page_button(
  p_id=>wwv_flow_api.id(4541346396825715828)
@@ -11106,7 +11106,7 @@ wwv_flow_api.create_page_plug(
 ,p_plug_display_sequence=>10
 ,p_plug_display_point=>'BODY'
 ,p_query_type=>'TABLE'
-,p_query_table=>'CLIENTS_CONS'
+,p_query_table=>'CLIENTS'
 ,p_include_rowid_column=>true
 ,p_is_editable=>true
 ,p_edit_operations=>'i:u:d'
@@ -11256,7 +11256,7 @@ wwv_flow_api.create_page_plug(
 ,p_plug_display_sequence=>20
 ,p_plug_display_point=>'BODY'
 ,p_query_type=>'TABLE'
-,p_query_table=>'PRODUCTS_DOSTAVCIK'
+,p_query_table=>'CONTRACT_SERVICES'
 ,p_include_rowid_column=>true
 ,p_plug_source_type=>'NATIVE_IG'
 ,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
@@ -11307,7 +11307,7 @@ wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541381283215824935)
 ,p_name=>unistr('\041F\0440\043E\0434\0443\043A\0442 ID')
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'PRODKOD_ID'
+,p_source_expression=>'ID_SERVICE'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -11359,7 +11359,7 @@ wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541382452410824935)
 ,p_name=>unistr('\0426\0435\043D\0430 \043D\0430 \0434\043E\0441\0442\0430\0432\043A\0430 (\043B\0432.)')
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'DOSTAWNACENA'
+,p_source_expression=>'PRICE'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -11481,7 +11481,7 @@ wwv_flow_api.create_page_plug(
 ,p_plug_display_sequence=>10
 ,p_plug_display_point=>'BODY'
 ,p_query_type=>'TABLE'
-,p_query_table=>'PRODUCTS'
+,p_query_table=>'SERVICES'
 ,p_include_rowid_column=>false
 ,p_plug_source_type=>'NATIVE_IR'
 ,p_prn_page_header=>unistr('\041F\0440\043E\0434\0443\043A\0442\0438')
@@ -11501,7 +11501,7 @@ wwv_flow_api.create_worksheet(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541390022386728101)
-,p_db_column_name=>'PRODKOD_ID'
+,p_db_column_name=>'ID_SERVICE'
 ,p_display_order=>1
 ,p_column_identifier=>'A'
 ,p_column_label=>unistr('ID \043D\0430 \043F\0440\043E\0434\0443\043A\0442\0430')
@@ -11509,7 +11509,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541390431171728100)
-,p_db_column_name=>'PROD_GR_ID'
+,p_db_column_name=>'ID_SECTOR'
 ,p_display_order=>2
 ,p_column_identifier=>'B'
 ,p_column_label=>unistr('\0413\0440\0443\043F\0430 \043F\0440\043E\0434\0443\043A\0442')
@@ -11517,7 +11517,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541390803924728100)
-,p_db_column_name=>'PRODKOD_ID_MASTER'
+,p_db_column_name=>'ID_SERVICE_MASTER'
 ,p_display_order=>3
 ,p_column_identifier=>'C'
 ,p_column_label=>unistr('\041E\0441\043D\043E\0432\0435\043D \043A\043E\0434')
@@ -11525,7 +11525,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541391268238728100)
-,p_db_column_name=>'PRODKOD'
+,p_db_column_name=>'SERVICE_CODE'
 ,p_display_order=>4
 ,p_column_identifier=>'D'
 ,p_column_label=>unistr('\041A\043E\0434 \043D\0430 \043F\0440\043E\0434\0443\043A\0442')
@@ -11533,7 +11533,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541391603391728100)
-,p_db_column_name=>'PRODNAME'
+,p_db_column_name=>'SERVICE_NAME'
 ,p_display_order=>5
 ,p_column_identifier=>'E'
 ,p_column_label=>unistr('\0418\043C\0435 \043D\0430 \043F\0440\043E\0434\0443\043A\0442')
@@ -11541,7 +11541,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541392071150728100)
-,p_db_column_name=>'MERKA'
+,p_db_column_name=>'DURATION_DAYS'
 ,p_display_order=>6
 ,p_column_identifier=>'F'
 ,p_column_label=>unistr('\041C\0435\0440\043D\0430 \0435\0434\0438\043D\0438\0446\0430')
@@ -11549,7 +11549,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541392494038728100)
-,p_db_column_name=>'DOSTAWNACENA'
+,p_db_column_name=>'PRICE'
 ,p_display_order=>7
 ,p_column_identifier=>'G'
 ,p_column_label=>unistr('\0414\043E\0441\0442\0430\0432\043D\0430 \0446\0435\043D\0430')
@@ -11558,7 +11558,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541392899814728100)
-,p_db_column_name=>'PRODAJNACENA'
+,p_db_column_name=>'TOTAL_AMOUNT'
 ,p_display_order=>8
 ,p_column_identifier=>'H'
 ,p_column_label=>unistr('\041F\0440\043E\0434\0430\0436\043D\0430 \0446\0435\043D\0430')
@@ -11567,7 +11567,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541393266911728099)
-,p_db_column_name=>'OPISANIE'
+,p_db_column_name=>'DESCRIPTION'
 ,p_display_order=>10
 ,p_column_identifier=>'I'
 ,p_column_label=>unistr('\041E\043F\0438\0441\0430\043D\0438\0435')
@@ -11580,7 +11580,7 @@ wwv_flow_api.create_worksheet_rpt(
 ,p_report_alias=>'45413937'
 ,p_status=>'PUBLIC'
 ,p_is_default=>'Y'
-,p_report_columns=>'PRODKOD_ID:PROD_GR_ID:PRODKOD_ID_MASTER:PRODKOD:PRODNAME:MERKA:DOSTAWNACENA:PRODAJNACENA:OPISANIE'
+,p_report_columns=>'ID_SERVICE:ID_SECTOR:ID_SERVICE_MASTER:SERVICE_CODE:SERVICE_NAME:DURATION_DAYS:PRICE:TOTAL_AMOUNT:DESCRIPTION'
 );
 end;
 /
@@ -11620,7 +11620,7 @@ wwv_flow_api.create_page_plug(
 ,p_plug_display_sequence=>20
 ,p_plug_display_point=>'BODY'
 ,p_query_type=>'TABLE'
-,p_query_table=>'DOCUMENT_RE'
+,p_query_table=>'PAYMENTS'
 ,p_include_rowid_column=>false
 ,p_plug_source_type=>'NATIVE_IG'
 ,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
@@ -11676,9 +11676,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541412677221082473)
-,p_name=>'ID_M'
+,p_name=>'ID_CONTRACT'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'ID_M'
+,p_source_expression=>'ID_CONTRACT'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_HIDDEN'
@@ -11694,9 +11694,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541413250610082472)
-,p_name=>'PRODKOD_ID'
+,p_name=>'ID_SERVICE'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'PRODKOD_ID'
+,p_source_expression=>'ID_SERVICE'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -11772,9 +11772,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541415054388082471)
-,p_name=>'WSICHKO'
+,p_name=>'AMOUNT'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'WSICHKO'
+,p_source_expression=>'AMOUNT'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -11798,9 +11798,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541415677433082470)
-,p_name=>'PARTIDA'
+,p_name=>'CONTRACT_NUMBER'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'PARTIDA'
+,p_source_expression=>'CONTRACT_NUMBER'
 ,p_data_type=>'VARCHAR2'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_TEXT_FIELD'
@@ -11941,7 +11941,7 @@ wwv_flow_api.create_page_plug(
 ,p_plug_display_sequence=>30
 ,p_plug_display_point=>'BODY'
 ,p_query_type=>'TABLE'
-,p_query_table=>'DOCUMENT_PARTIDA'
+,p_query_table=>'DOCUMENT_CONTRACT_NUMBER'
 ,p_include_rowid_column=>true
 ,p_plug_source_type=>'NATIVE_IG'
 ,p_master_region_id=>wwv_flow_api.id(4541409736708082505)
@@ -11989,9 +11989,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541419459974082440)
-,p_name=>'ID_DOC_PARTIDA'
+,p_name=>'ID_DOC_CONTRACT_NUMBER'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'ID_DOC_PARTIDA'
+,p_source_expression=>'ID_DOC_CONTRACT_NUMBER'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -12032,9 +12032,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541420569017082439)
-,p_name=>'PRODKOD_ID'
+,p_name=>'ID_SERVICE'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'PRODKOD_ID'
+,p_source_expression=>'ID_SERVICE'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -12058,9 +12058,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541421162343082439)
-,p_name=>'KOL_PARTIDA'
+,p_name=>'KOL_CONTRACT_NUMBER'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'KOL_PARTIDA'
+,p_source_expression=>'KOL_CONTRACT_NUMBER'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -12084,9 +12084,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541421791742082439)
-,p_name=>'PARTIDA'
+,p_name=>'CONTRACT_NUMBER'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'PARTIDA'
+,p_source_expression=>'CONTRACT_NUMBER'
 ,p_data_type=>'VARCHAR2'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_TEXT_FIELD'
@@ -12118,9 +12118,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541422317527082439)
-,p_name=>'ID_PARTIDA'
+,p_name=>'ID_CONTRACT_NUMBER'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'ID_PARTIDA'
+,p_source_expression=>'ID_CONTRACT_NUMBER'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -12316,15 +12316,15 @@ wwv_flow_api.create_page_plug(
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT',
 '    dr.ID_S,',
-'    dr.ID_M,',
-'    dr.PRODKOD_ID,',
+'    dr.ID_CONTRACT,',
+'    dr.ID_SERVICE,',
 '    dr.KOLICHESTWO,',
 '    dr.CENA,',
-'    dr.WSICHKO,',
-'    dr.PARTIDA,',
+'    dr.AMOUNT,',
+'    dr.CONTRACT_NUMBER,',
 '    t.TIPDOC AS TIP_DOKUMENT',
-'FROM DOCUMENT_RE dr',
-'JOIN DOCUMENT_GL dg ON dr.ID_M = dg.ID_M',
+'FROM PAYMENTS dr',
+'JOIN CONTRACTS dg ON dr.ID_CONTRACT = dg.ID_CONTRACT',
 'JOIN TIP_DOC t ON dg.TIP_DOC_ID = t.TIP_DOC_ID',
 ''))
 ,p_is_editable=>true
@@ -12411,13 +12411,13 @@ wwv_flow_api.create_page_item(
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4545593685924747466)
-,p_name=>'P18_ID_M'
+,p_name=>'P18_ID_CONTRACT'
 ,p_source_data_type=>'NUMBER'
 ,p_item_sequence=>20
 ,p_item_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_item_source_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_prompt=>unistr('\2116 \043D\0430 \0434\043E\043A\0443\043C\0435\043D\0442')
-,p_source=>'ID_M'
+,p_source=>'ID_CONTRACT'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_NUMBER_FIELD'
 ,p_cSize=>32
@@ -12429,13 +12429,13 @@ wwv_flow_api.create_page_item(
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4545594004528747466)
-,p_name=>'P18_PRODKOD_ID'
+,p_name=>'P18_ID_SERVICE'
 ,p_source_data_type=>'NUMBER'
 ,p_item_sequence=>30
 ,p_item_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_item_source_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_prompt=>unistr('\041A\043E\0434 \043D\0430 \043F\0440\043E\0434\0443\043A\0442')
-,p_source=>'PRODKOD_ID'
+,p_source=>'ID_SERVICE'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_NUMBER_FIELD'
 ,p_cSize=>32
@@ -12485,13 +12485,13 @@ wwv_flow_api.create_page_item(
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4545595254466747465)
-,p_name=>'P18_WSICHKO'
+,p_name=>'P18_AMOUNT'
 ,p_source_data_type=>'NUMBER'
 ,p_item_sequence=>60
 ,p_item_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_item_source_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_prompt=>unistr('\041E\0431\0449\0430 \0441\0442\043E\0439\043D\043E\0441\0442 (\043B\0432.)')
-,p_source=>'WSICHKO'
+,p_source=>'AMOUNT'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_NUMBER_FIELD'
 ,p_cSize=>32
@@ -12503,13 +12503,13 @@ wwv_flow_api.create_page_item(
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4545595645753747465)
-,p_name=>'P18_PARTIDA'
+,p_name=>'P18_CONTRACT_NUMBER'
 ,p_source_data_type=>'VARCHAR2'
 ,p_item_sequence=>70
 ,p_item_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_item_source_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_prompt=>unistr('\2116 \043D\0430 \043F\0430\0440\0442\0438\0434\0430')
-,p_source=>'PARTIDA'
+,p_source=>'CONTRACT_NUMBER'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_TEXT_FIELD'
 ,p_cSize=>32
@@ -12591,7 +12591,7 @@ wwv_flow_api.create_page_plug(
 ,p_plug_display_sequence=>10
 ,p_plug_display_point=>'BODY'
 ,p_query_type=>'TABLE'
-,p_query_table=>'OPERATORS'
+,p_query_table=>'EMPLOYEES'
 ,p_include_rowid_column=>false
 ,p_plug_source_type=>'NATIVE_IR'
 ,p_prn_page_header=>unistr('\041F\043E\0442\0440\0435\0431\0438\0442\0435\043B\0438 / \041E\043F\0435\0440\0430\0442\043E\0440\0438')
@@ -12619,7 +12619,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4545607253694686613)
-,p_db_column_name=>'OPER_ID_MASTER'
+,p_db_column_name=>'ID_SECTOR'
 ,p_display_order=>2
 ,p_column_identifier=>'B'
 ,p_column_label=>unistr('\041A\043E\0434 \043D\0430 \0433\043B\0430\0432\0435\043D \043E\043F\0435\0440\0430\0442\043E\0440')
@@ -12627,7 +12627,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4545607628216686612)
-,p_db_column_name=>'OPERATOR_NAME'
+,p_db_column_name=>'FIO_EMPLOYEE'
 ,p_display_order=>3
 ,p_column_identifier=>'C'
 ,p_column_label=>unistr('\0418\043C\0435 \043D\0430 \043E\043F\0435\0440\0430\0442\043E\0440')
@@ -12635,7 +12635,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4545608019435686612)
-,p_db_column_name=>'ZAPLATA'
+,p_db_column_name=>'SALARY'
 ,p_display_order=>4
 ,p_column_identifier=>'D'
 ,p_column_label=>unistr('\0417\0430\043F\043B\0430\0442\0430 (\043B\0432.)')
@@ -12643,7 +12643,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4545608485130686612)
-,p_db_column_name=>'DLAZNOST'
+,p_db_column_name=>'POSITION'
 ,p_display_order=>5
 ,p_column_identifier=>'E'
 ,p_column_label=>unistr('\0414\043B\044A\0436\043D\043E\0441\0442')
@@ -12651,7 +12651,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4545608868370686612)
-,p_db_column_name=>'KOMISIONNA'
+,p_db_column_name=>'HIRE_DATE'
 ,p_display_order=>6
 ,p_column_identifier=>'F'
 ,p_column_label=>unistr('\041A\043E\043C\0438\0441\0438\043E\043D\043D\0430 (%)')
@@ -12659,7 +12659,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4545609299952686612)
-,p_db_column_name=>'ADRES'
+,p_db_column_name=>'EMAIL'
 ,p_display_order=>7
 ,p_column_identifier=>'G'
 ,p_column_label=>unistr('\0410\0434\0440\0435\0441')
@@ -12667,7 +12667,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4545609632722686612)
-,p_db_column_name=>'OPER_EMAIL'
+,p_db_column_name=>'EMAIL'
 ,p_display_order=>8
 ,p_column_identifier=>'H'
 ,p_column_label=>unistr('\0418\043C\0435\0439\043B')
@@ -12675,7 +12675,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4545610018030686612)
-,p_db_column_name=>'TELEFON'
+,p_db_column_name=>'PHONE'
 ,p_display_order=>9
 ,p_column_identifier=>'I'
 ,p_column_label=>unistr('\0422\0435\043B\0435\0444\043E\043D')
@@ -12688,7 +12688,7 @@ wwv_flow_api.create_worksheet_rpt(
 ,p_report_alias=>'45456105'
 ,p_status=>'PUBLIC'
 ,p_is_default=>'Y'
-,p_report_columns=>'OPER_ID:OPER_ID_MASTER:OPERATOR_NAME:ZAPLATA:DLAZNOST:KOMISIONNA:ADRES:OPER_EMAIL:TELEFON'
+,p_report_columns=>'OPER_ID:ID_SECTOR:FIO_EMPLOYEE:SALARY:POSITION:HIRE_DATE:EMAIL:EMAIL:PHONE'
 );
 end;
 /
@@ -12715,14 +12715,14 @@ wwv_flow_api.create_page_plug(
 ,p_query_type=>'SQL'
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'select ',
-unistr('    cl.FIRMA as \0418\041C\0415_\041D\0410_\041A\041B\0418\0415\041D\0422,'),
-unistr('    r.ID_M as \041D\041E\041C\0415\0420_\041D\0410_\0414\041E\041A\0423\041C\0415\041D\0422,'),
-unistr('    r.PARTIDA as \041F\0410\0420\0422\0418\0414\0410,'),
-unistr('    r.WSICHKO as \041E\0411\0429\0410_\0421\0422\041E\0419\041D\041E\0421\0422'),
-'from DOCUMENT_RE r',
-'join DOCUMENT_GL g on r.ID_M = g.ID_M',
-'join CLIENTS_CONS cc on g.ID_CLIENT = cc.ID_CLIENT_C',
-'join CLIENTS cl on cc.ID_CLIENT_C = cl.ID_CLIENT',
+unistr('    cl.FIO_CLIENT as \0418\041C\0415_\041D\0410_\041A\041B\0418\0415\041D\0422,'),
+unistr('    r.ID_CONTRACT as \041D\041E\041C\0415\0420_\041D\0410_\0414\041E\041A\0423\041C\0415\041D\0422,'),
+unistr('    r.CONTRACT_NUMBER as \041F\0410\0420\0422\0418\0414\0410,'),
+unistr('    r.AMOUNT as \041E\0411\0429\0410_\0421\0422\041E\0419\041D\041E\0421\0422'),
+'from PAYMENTS r',
+'join CONTRACTS g on r.ID_CONTRACT = g.ID',
+'join CLIENTS cc on g.ID_CLIENT = cc.ID',
+'join CLIENTS cl on cc.ID = cl.ID_CLIENT',
 ''))
 ,p_plug_source_type=>'NATIVE_IR'
 ,p_prn_page_header=>unistr('\0421\043F\0440\0430\0432\043A\0430 \043F\043E \043A\043B\0438\0435\043D\0442')
@@ -12807,18 +12807,18 @@ wwv_flow_api.create_page_plug(
 ,p_query_type=>'SQL'
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT ',
-'    v.ID_V,',
-unistr('    v.VALUTA_NAME AS \0418\041C\0415_\041D\0410_\0412\0410\041B\0423\0422\0410,'),
-unistr('    v.VALUTA_COUNTRY AS \0414\042A\0420\0416\0410\0412\0410,'),
-unistr('    vr.STOJNOST AS \041F\041E\0421\041B\0415\0414\0415\041D_\041A\0423\0420\0421,'),
-unistr('    TO_CHAR(vr.DATE_V, ''DD.MM.YYYY'') AS \0414\0410\0422\0410_\041D\0410_\041A\0423\0420\0421\0410'),
-'FROM VALUTA v',
-'LEFT JOIN VALUTA_RE vr',
-'    ON vr.ID_V = v.ID_V',
-'WHERE vr.DATE_V = (',
+'    v.ID,',
+unistr('    v.SECTOR_NAME AS \0418\041C\0415_\041D\0410_\0412\0410\041B\0423\0422\0410,'),
+unistr('    v.DESCRIPTION AS \0414\042A\0420\0416\0410\0412\0410,'),
+unistr('    vr.PRICE AS \041F\041E\0421\041B\0415\0414\0415\041D_\041A\0423\0420\0421,'),
+unistr('    TO_CHAR(vr.VALID_FROM, ''DD.MM.YYYY'') AS \0414\0410\0422\0410_\041D\0410_\041A\0423\0420\0421\0410'),
+'FROM SECTORS v',
+'LEFT JOIN PRICING vr',
+'    ON vr.ID_SERVICE = v.ID',
+'WHERE vr.VALID_FROM = (',
 '    SELECT MAX(vr2.DATE_V)',
-'    FROM VALUTA_RE vr2',
-'    WHERE vr2.ID_V = v.ID_V',
+'    FROM PRICING vr2',
+'    WHERE vr2.ID_SERVICE = v.ID',
 ')',
 ''))
 ,p_plug_source_type=>'NATIVE_IR'
