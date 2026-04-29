@@ -11016,7 +11016,7 @@ wwv_flow_api.create_worksheet(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541347831563648801)
-,p_db_column_name=>'IDONS'
+,p_db_column_name=>'ID'
 ,p_display_order=>10
 ,p_column_identifier=>'B'
 ,p_column_label=>'Id Client Cons'
@@ -11025,10 +11025,10 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541347974142648802)
-,p_db_column_name=>'ID_CLIENT_F'
+,p_db_column_name=>'FIO_CLIENT'
 ,p_display_order=>20
 ,p_column_identifier=>'C'
-,p_column_label=>'Id Client F'
+,p_column_label=>'Fio Client'
 ,p_column_type=>'NUMBER'
 ,p_column_alignment=>'RIGHT'
 );
@@ -11066,7 +11066,7 @@ wwv_flow_api.create_worksheet_rpt(
 ,p_report_alias=>'45413468'
 ,p_status=>'PUBLIC'
 ,p_is_default=>'Y'
-,p_report_columns=>'ROWIDONS:ID_CLIENT_F:ID:ROWID'
+,p_report_columns=>'ID:FIO_CLIENT:ROWID'
 );
 wwv_flow_api.create_page_button(
  p_id=>wwv_flow_api.id(4541346396825715828)
@@ -11196,13 +11196,13 @@ wwv_flow_api.create_page_item(
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4541340276625715830)
-,p_name=>'P14_ID_CLIENT_F'
+,p_name=>'P14_FIO_CLIENT'
 ,p_source_data_type=>'NUMBER'
 ,p_item_sequence=>20
 ,p_item_plug_id=>wwv_flow_api.id(4541339594778715831)
 ,p_item_source_plug_id=>wwv_flow_api.id(4541339594778715831)
-,p_prompt=>'Id Client F'
-,p_source=>'ID_CLIENT_F'
+,p_prompt=>'Fio Client'
+,p_source=>'FIO_CLIENT'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_NUMBER_FIELD'
 ,p_cSize=>32
@@ -11279,9 +11279,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541380778083824936)
-,p_name=>'ID_PROD_DOST'
+,p_name=>'ID'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'ID_PROD_DOST'
+,p_source_expression=>'ID'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -11333,7 +11333,7 @@ wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541381840688824935)
 ,p_name=>unistr('\041A\043B\0438\0435\043D\0442 ID')
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'ID_CLIENT'
+,p_source_expression=>'ID_CONTRACT'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -11359,7 +11359,7 @@ wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541382452410824935)
 ,p_name=>unistr('\0426\0435\043D\0430 \043D\0430 \0434\043E\0441\0442\0430\0432\043A\0430 (\043B\0432.)')
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'PRICE'
+,p_source_expression=>'DURATION_DAYS'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -11509,7 +11509,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541390431171728100)
-,p_db_column_name=>'ID_SECTOR'
+,p_db_column_name=>'ID'
 ,p_display_order=>2
 ,p_column_identifier=>'B'
 ,p_column_label=>unistr('\0413\0440\0443\043F\0430 \043F\0440\043E\0434\0443\043A\0442')
@@ -11517,7 +11517,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541390803924728100)
-,p_db_column_name=>'ID_SERVICE_MASTER'
+,p_db_column_name=>'DESCRIPTION'
 ,p_display_order=>3
 ,p_column_identifier=>'C'
 ,p_column_label=>unistr('\041E\0441\043D\043E\0432\0435\043D \043A\043E\0434')
@@ -11525,7 +11525,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541391268238728100)
-,p_db_column_name=>'SERVICE_CODE'
+,p_db_column_name=>'DESCRIPTION'
 ,p_display_order=>4
 ,p_column_identifier=>'D'
 ,p_column_label=>unistr('\041A\043E\0434 \043D\0430 \043F\0440\043E\0434\0443\043A\0442')
@@ -11549,7 +11549,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541392494038728100)
-,p_db_column_name=>'PRICE'
+,p_db_column_name=>'DURATION_DAYS'
 ,p_display_order=>7
 ,p_column_identifier=>'G'
 ,p_column_label=>unistr('\0414\043E\0441\0442\0430\0432\043D\0430 \0446\0435\043D\0430')
@@ -11558,7 +11558,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4541392899814728100)
-,p_db_column_name=>'TOTAL_AMOUNT'
+,p_db_column_name=>'DURATION_DAYS'
 ,p_display_order=>8
 ,p_column_identifier=>'H'
 ,p_column_label=>unistr('\041F\0440\043E\0434\0430\0436\043D\0430 \0446\0435\043D\0430')
@@ -11580,7 +11580,7 @@ wwv_flow_api.create_worksheet_rpt(
 ,p_report_alias=>'45413937'
 ,p_status=>'PUBLIC'
 ,p_is_default=>'Y'
-,p_report_columns=>'ID_SERVICE:ID_SECTOR:ID_SERVICE_MASTER:SERVICE_CODE:SERVICE_NAME:DURATION_DAYS:PRICE:TOTAL_AMOUNT:DESCRIPTION'
+,p_report_columns=>'ID_SERVICE:ID_SECTOR:DESCRIPTION:DESCRIPTION:SERVICE_NAME:DURATION_DAYS:DURATION_DAYS:DURATION_DAYS:DESCRIPTION'
 );
 end;
 /
@@ -11650,9 +11650,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541412022676082473)
-,p_name=>'ID_S'
+,p_name=>'ID'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'ID_S'
+,p_source_expression=>'ID'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -11720,9 +11720,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541413848442082472)
-,p_name=>'KOLICHESTWO'
+,p_name=>'AMOUNT'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'KOLICHESTWO'
+,p_source_expression=>'AMOUNT'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -11941,7 +11941,7 @@ wwv_flow_api.create_page_plug(
 ,p_plug_display_sequence=>30
 ,p_plug_display_point=>'BODY'
 ,p_query_type=>'TABLE'
-,p_query_table=>'DOCUMENT_CONTRACT_NUMBER'
+,p_query_table=>'CONTRACT_SERVICES'
 ,p_include_rowid_column=>true
 ,p_plug_source_type=>'NATIVE_IG'
 ,p_master_region_id=>wwv_flow_api.id(4541409736708082505)
@@ -11989,9 +11989,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541419459974082440)
-,p_name=>'ID_DOC_CONTRACT_NUMBER'
+,p_name=>'ID'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'ID_DOC_CONTRACT_NUMBER'
+,p_source_expression=>'ID'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -12015,9 +12015,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541419940625082440)
-,p_name=>'ID_S'
+,p_name=>'ID'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'ID_S'
+,p_source_expression=>'ID'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_HIDDEN'
@@ -12058,9 +12058,9 @@ wwv_flow_api.create_region_column(
 );
 wwv_flow_api.create_region_column(
  p_id=>wwv_flow_api.id(4541421162343082439)
-,p_name=>'KOL_CONTRACT_NUMBER'
+,p_name=>'QUANTITY'
 ,p_source_type=>'DB_COLUMN'
-,p_source_expression=>'KOL_CONTRACT_NUMBER'
+,p_source_expression=>'QUANTITY'
 ,p_data_type=>'NUMBER'
 ,p_is_query_only=>false
 ,p_item_type=>'NATIVE_NUMBER_FIELD'
@@ -12318,7 +12318,7 @@ wwv_flow_api.create_page_plug(
 '    dr.ID_S,',
 '    dr.ID_CONTRACT,',
 '    dr.ID_SERVICE,',
-'    dr.KOLICHESTWO,',
+'    dr.AMOUNT,',
 '    dr.CENA,',
 '    dr.AMOUNT,',
 '    dr.CONTRACT_NUMBER,',
@@ -12399,7 +12399,7 @@ wwv_flow_api.create_page_item(
 ,p_item_source_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_use_cache_before_default=>'NO'
 ,p_prompt=>'Id S'
-,p_source=>'ID_S'
+,p_source=>'ID'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_label_alignment=>'RIGHT'
@@ -12447,14 +12447,14 @@ wwv_flow_api.create_page_item(
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4545594499134747466)
-,p_name=>'P18_KOLICHESTWO'
+,p_name=>'P18_AMOUNT'
 ,p_source_data_type=>'NUMBER'
 ,p_is_required=>true
 ,p_item_sequence=>40
 ,p_item_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_item_source_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_prompt=>unistr('\041A\043E\043B\0438\0447\0435\0441\0442\0432\043E')
-,p_source=>'KOLICHESTWO'
+,p_source=>'AMOUNT'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_NUMBER_FIELD'
 ,p_cSize=>32
@@ -12611,7 +12611,7 @@ wwv_flow_api.create_worksheet(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4545606852709686615)
-,p_db_column_name=>'OPER_ID'
+,p_db_column_name=>'ID'
 ,p_display_order=>1
 ,p_column_identifier=>'A'
 ,p_column_label=>unistr('\2116 \043D\0430 \043E\043F\0435\0440\0430\0442\043E\0440')
@@ -12619,7 +12619,7 @@ wwv_flow_api.create_worksheet_column(
 );
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(4545607253694686613)
-,p_db_column_name=>'ID_SECTOR'
+,p_db_column_name=>'ID'
 ,p_display_order=>2
 ,p_column_identifier=>'B'
 ,p_column_label=>unistr('\041A\043E\0434 \043D\0430 \0433\043B\0430\0432\0435\043D \043E\043F\0435\0440\0430\0442\043E\0440')
@@ -12688,7 +12688,7 @@ wwv_flow_api.create_worksheet_rpt(
 ,p_report_alias=>'45456105'
 ,p_status=>'PUBLIC'
 ,p_is_default=>'Y'
-,p_report_columns=>'OPER_ID:ID_SECTOR:FIO_EMPLOYEE:SALARY:POSITION:HIRE_DATE:EMAIL:EMAIL:PHONE'
+,p_report_columns=>'ID:ID_SECTOR:FIO_EMPLOYEE:SALARY:POSITION:HIRE_DATE:EMAIL:PHONE'
 );
 end;
 /
@@ -12722,7 +12722,7 @@ unistr('    r.AMOUNT as \041E\0411\0429\0410_\0421\0422\041E\0419\041D\041E\0421
 'from PAYMENTS r',
 'join CONTRACTS g on r.ID_CONTRACT = g.ID',
 'join CLIENTS cc on g.ID_CLIENT = cc.ID',
-'join CLIENTS cl on cc.ID = cl.ID_CLIENT',
+'join CLIENTS cl on cc.ID = cl.ID',
 ''))
 ,p_plug_source_type=>'NATIVE_IR'
 ,p_prn_page_header=>unistr('\0421\043F\0440\0430\0432\043A\0430 \043F\043E \043A\043B\0438\0435\043D\0442')
@@ -12816,7 +12816,7 @@ unistr('    TO_CHAR(vr.VALID_FROM, ''DD.MM.YYYY'') AS \0414\0410\0422\0410_\041D
 'LEFT JOIN PRICING vr',
 '    ON vr.ID_SERVICE = v.ID',
 'WHERE vr.VALID_FROM = (',
-'    SELECT MAX(vr2.DATE_V)',
+'    SELECT MAX(vr2.VALID_FROM)',
 '    FROM PRICING vr2',
 '    WHERE vr2.ID_SERVICE = v.ID',
 ')',
