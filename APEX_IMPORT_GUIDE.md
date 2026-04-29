@@ -1,64 +1,76 @@
-# Импорт расширенного Oracle APEX приложения
+# Исправленный способ (без ORA-06502) для Oracle APEX
 
-Файл `apex_app_mockup.sql` содержит расширенный макет приложения, покрывающий **все таблицы БД**:
-- clients
-- construction_objects
-- sectors
-- employees
-- sector_heads
-- services
-- pricing
-- contracts
-- contract_services
-- payments
-- documents
-- expertise_reports
+Ошибка `ORA-06502: character to number conversion error` при **App Builder → Import** возникала из-за несовместимости экспортного API между версиями APEX.
 
-Также добавлено:
-- формы **Create/Edit** для клиентов и контрактов;
-- диаграммы по статусам контрактов и платежам;
-- заготовка ролевой авторизации (менеджер, эксперт, руководитель сектора).
+Ниже — стабильный путь, который работает в большинстве сред:
 
-## 1. Подготовка
-1. Выполните `1.sql` в нужной схеме.
-2. Проверьте, что таблицы созданы и доступны в Parsing Schema.
+## Важно
+Файл `apex_app_mockup.sql` теперь нужно запускать в:
+- **SQL Workshop → SQL Scripts**
 
-## 2. Импорт
-1. Oracle APEX → **App Builder** → **Import**.
-2. Загрузите `apex_app_mockup.sql`.
-3. Укажите:
-   - Parsing Schema = схема с таблицами;
-   - Application ID = 9100 (или свой).
-4. Нажмите **Install Application**.
+а не загружать через **App Builder → Import**.
 
-## 3. Настройка ролей
-В приложении включены схемы авторизации:
-- `ROLE_MANAGER`
-- `ROLE_EXPERT`
-- `ROLE_HEAD`
+---
 
-После импорта:
-1. Откройте **Shared Components → Authorization Schemes**.
-2. Замените логику на проверку ваших групп/ролей (например через таблицу пользователей или SSO атрибуты).
-3. Назначьте нужные схемы на страницы/регионы:
-   - менеджер: contracts/payments/documents;
-   - эксперт: expertise_reports;
-   - руководитель сектора: review/approval отчётов.
+## 1) Подготовка базы
+1. Выполните `1.sql`.
+2. Выполните `apex_app_mockup.sql`.
 
-## 4. Что внутри по страницам
-- `1` Дашборд: KPI + 2 диаграммы (`contracts.status`, `payments.status`).
-- `10` Клиенты: отчёт.
-- `11` Клиент: форма Create/Edit.
-- `12` Объекты: отчёт.
-- `14` Секторы/Сотрудники/Руководители: 3 региона отчётов.
-- `16` Услуги/Цены: 2 региона отчётов.
-- `20` Контракты: отчёт.
-- `21` Контракт: форма Create/Edit + услуги в контракте.
-- `24` Платежи/Документы: 2 региона отчётов.
-- `30` Отчёты экспертизы: отчёт.
+Скрипт создаст:
+- таблицу ролей `app_user_roles`;
+- функцию `has_role` для авторизации;
+- набор представлений `v_*` для всех таблиц вашей БД;
+- 2 view для диаграмм.
 
-## 5. Важное замечание по совместимости
-Скрипт ориентирован на современные версии APEX (23+/24+). Если импорт не прошёл:
-1. Создайте пустое приложение.
-2. Скопируйте SQL-запросы из `apex_app_mockup.sql` в соответствующие страницы вручную.
-3. Примените CSS из блока `create_theme_style`.
+---
+
+## 2) Создание приложения в APEX (Wizard)
+1. **App Builder → Create → New Application**.
+2. Имя: `Construction Expertise Pro`.
+3. Добавьте страницы:
+   - Interactive Report по view:
+     - `v_clients`, `v_objects`, `v_sectors`, `v_employees`, `v_sector_heads`,
+     - `v_services`, `v_pricing`, `v_contracts`, `v_contract_services`,
+     - `v_payments`, `v_documents`, `v_expertise_reports`.
+   - Form pages (Create/Edit):
+     - таблица `clients`,
+     - таблица `contracts`.
+   - Chart pages:
+     - `v_contract_status_chart`,
+     - `v_payment_status_chart`.
+
+---
+
+## 3) Ролевая авторизация
+1. Shared Components → Authorization Schemes.
+2. Создайте 3 схемы типа **PL/SQL Function Body**:
+   - `return has_role('MANAGER');`
+   - `return has_role('EXPERT');`
+   - `return has_role('SECTOR_HEAD');`
+3. Назначьте схемы на страницы/регионы.
+
+Пример наполнения ролей:
+```sql
+insert into app_user_roles(username, role_code) values ('IVANOV', 'MANAGER');
+insert into app_user_roles(username, role_code) values ('PETROV', 'EXPERT');
+insert into app_user_roles(username, role_code) values ('SIDOROV', 'SECTOR_HEAD');
+commit;
+```
+
+---
+
+## 4) Оформление (красивый стиль)
+В приложении: **Shared Components → Themes → Universal Theme → Theme Roller / Inline CSS**
+
+```css
+.t-Header-branding { background: linear-gradient(90deg,#1e3a8a,#0ea5e9)!important; }
+.t-Body-nav { background: #0f172a; }
+.t-Region { border-radius: 12px; box-shadow: 0 4px 16px rgba(2,6,23,.08); }
+.t-Button--hot { background:#0ea5e9!important; border-color:#0284c7!important; }
+```
+
+---
+
+## 5) Почему это исправляет ошибку
+- Мы убрали зависимость от внутреннего экспортного формата `wwv_flow_imp*`, который часто ломается между версиями APEX.
+- Используется стандартный стабильный сценарий: SQL-объекты + создание UI через мастер APEX.
