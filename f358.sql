@@ -12315,17 +12315,15 @@ wwv_flow_api.create_page_plug(
 ,p_query_type=>'SQL'
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT',
-'    dr.ID_S,',
+'    dr.ID,',
 '    dr.ID_CONTRACT,',
-'    dr.ID_SERVICE,',
 '    dr.AMOUNT,',
-'    dr.CENA,',
-'    dr.AMOUNT,',
-'    dr.CONTRACT_NUMBER,',
-'    t.TIPDOC AS TIP_DOKUMENT',
+'    dr.AMOUNT AS UNIT_AMOUNT,',
+'    dr.AMOUNT AS TOTAL_AMOUNT,',
+'    dg.CONTRACT_NUMBER,',
+'    dr.PAYMENT_METHOD AS TIP_DOKUMENT',
 'FROM PAYMENTS dr',
-'JOIN CONTRACTS dg ON dr.ID_CONTRACT = dg.ID_CONTRACT',
-'JOIN TIP_DOC t ON dg.TIP_DOC_ID = t.TIP_DOC_ID',
+'JOIN CONTRACTS dg ON dr.ID_CONTRACT = dg.ID',
 ''))
 ,p_is_editable=>true
 ,p_edit_operations=>'i:u:d'
@@ -12343,7 +12341,7 @@ wwv_flow_api.create_page_button(
 ,p_button_is_hot=>'Y'
 ,p_button_image_alt=>'Apply Changes'
 ,p_button_position=>'REGION_TEMPLATE_CHANGE'
-,p_button_condition=>'P18_ID_S'
+,p_button_condition=>'P18_ID'
 ,p_button_condition_type=>'ITEM_IS_NOT_NULL'
 ,p_database_action=>'UPDATE'
 );
@@ -12369,7 +12367,7 @@ wwv_flow_api.create_page_button(
 ,p_button_is_hot=>'Y'
 ,p_button_image_alt=>'Create'
 ,p_button_position=>'REGION_TEMPLATE_CREATE'
-,p_button_condition=>'P18_ID_S'
+,p_button_condition=>'P18_ID'
 ,p_button_condition_type=>'ITEM_IS_NULL'
 ,p_database_action=>'INSERT'
 );
@@ -12385,13 +12383,13 @@ wwv_flow_api.create_page_button(
 ,p_button_position=>'REGION_TEMPLATE_DELETE'
 ,p_button_redirect_url=>'javascript:apex.confirm(htmldb_delete_message,''DELETE'');'
 ,p_button_execute_validations=>'N'
-,p_button_condition=>'P18_ID_S'
+,p_button_condition=>'P18_ID'
 ,p_button_condition_type=>'ITEM_IS_NOT_NULL'
 ,p_database_action=>'DELETE'
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4545593216340747467)
-,p_name=>'P18_ID_S'
+,p_name=>'P18_ID'
 ,p_source_data_type=>'NUMBER'
 ,p_is_primary_key=>true
 ,p_item_sequence=>10
@@ -12429,13 +12427,13 @@ wwv_flow_api.create_page_item(
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4545594004528747466)
-,p_name=>'P18_ID_SERVICE'
+,p_name=>'P18_AMOUNT_RAW'
 ,p_source_data_type=>'NUMBER'
 ,p_item_sequence=>30
 ,p_item_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_item_source_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_prompt=>unistr('\041A\043E\0434 \043D\0430 \043F\0440\043E\0434\0443\043A\0442')
-,p_source=>'ID_SERVICE'
+,p_source=>'AMOUNT'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_NUMBER_FIELD'
 ,p_cSize=>32
@@ -12466,14 +12464,14 @@ wwv_flow_api.create_page_item(
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4545594834495747465)
-,p_name=>'P18_CENA'
+,p_name=>'P18_UNIT_AMOUNT'
 ,p_source_data_type=>'NUMBER'
 ,p_is_required=>true
 ,p_item_sequence=>50
 ,p_item_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_item_source_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_prompt=>unistr('\0415\0434\0438\043D\0438\0447\043D\0430 \0446\0435\043D\0430 (\043B\0432.)')
-,p_source=>'CENA'
+,p_source=>'UNIT_AMOUNT'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_NUMBER_FIELD'
 ,p_cSize=>32
@@ -12485,13 +12483,13 @@ wwv_flow_api.create_page_item(
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4545595254466747465)
-,p_name=>'P18_AMOUNT'
+,p_name=>'P18_TOTAL_AMOUNT'
 ,p_source_data_type=>'NUMBER'
 ,p_item_sequence=>60
 ,p_item_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_item_source_plug_id=>wwv_flow_api.id(4545592823307747471)
 ,p_prompt=>unistr('\041E\0431\0449\0430 \0441\0442\043E\0439\043D\043E\0441\0442 (\043B\0432.)')
-,p_source=>'AMOUNT'
+,p_source=>'TOTAL_AMOUNT'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_NUMBER_FIELD'
 ,p_cSize=>32
@@ -12534,9 +12532,10 @@ wwv_flow_api.create_page_item(
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_SELECT_LIST'
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT TIPDOC AS DISPLAY_VALUE, TIP_DOC_ID AS RETURN_VALUE',
-'FROM TIP_DOC',
-'ORDER BY TIPDOC',
+'SELECT ''cash'' AS DISPLAY_VALUE, ''cash'' AS RETURN_VALUE FROM DUAL',
+'UNION ALL SELECT ''bank_transfer'', ''bank_transfer'' FROM DUAL',
+'UNION ALL SELECT ''card'', ''card'' FROM DUAL',
+'UNION ALL SELECT ''online'', ''online'' FROM DUAL',
 ''))
 ,p_lov_display_null=>'YES'
 ,p_cHeight=>1
